@@ -3,21 +3,9 @@
  * This file initializes a connection pool to efficiently manage connections to the PostgreSQL database.
  */
 
+import "./load-env.js";
 import pkg from "pg"; // Import the `pg` package for PostgreSQL
 const { Pool } = pkg; // Extract the Pool class for managing connections
-import dotenv from "dotenv"; // Import dotenv for environment variable management
-import path from "path";
-import { fileURLToPath } from "url";
-
-// Try to load backend/.env.local first (shared with Express server)
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const localEnvPath = path.join(__dirname, "../.env.local");
-const envResult = dotenv.config({ path: localEnvPath });
-
-// Fall back to default .env if .env.local is missing
-if (envResult.error) {
-  dotenv.config();
-}
 
 /**
  * Creates a new connection pool to the PostgreSQL database.

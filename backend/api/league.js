@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { defaultProvider } from "@aws-sdk/credential-provider-node";
 import { streamToString } from "../utils/stream.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -45,6 +46,9 @@ if (hasExplicitCredentials) {
     accessKeyId: process.env.AWS_ACCESS_KEY,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   };
+} else if (process.env.AWS_PROFILE) {
+  console.info("[league] Using the local AWS profile to read the deployed data bucket.");
+  s3Config.credentials = defaultProvider({ profile: process.env.AWS_PROFILE });
 } else {
   console.info("[league] Using ECS task role for AWS credentials.");
 }

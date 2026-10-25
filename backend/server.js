@@ -3,14 +3,7 @@
  * This file sets up middleware, routes, and starts the server.
  */
 
-import dotenv from "dotenv"; // For managing environment variables
-import path from "path";
-import { fileURLToPath } from "url";
-
-// Load environment variables from parent directory's .env.local
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-dotenv.config({ path: path.join(__dirname, "../.env.local") });
-
+import "./load-env.js";
 import express, { json } from "express"; // Express.js framework for creating APIs
 import cors from "cors"; // Middleware to enable Cross-Origin Resource Sharing
 import pool from "./db.js";
